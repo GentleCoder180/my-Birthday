@@ -1,12 +1,16 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birthday Countdown 🎂</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -17,7 +21,9 @@
       text-align: center;
       font-family: Arial, sans-serif;
       color: white;
-      background: linear-gradient(-45deg, #11002e, #003b73, #7800a8, #001b46);
+      background: linear-gradient(
+        -45deg, #11002e, #003b73, #7800a8, #001b46
+      );
       background-size: 400% 400%;
       animation: colors 10s ease infinite;
       padding: 20px;
@@ -34,15 +40,26 @@
       width: 100%;
       padding: 35px 20px;
       border-radius: 25px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 0 40px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(10px);
     }
 
-    h1 { font-size: clamp(2rem, 8vw, 3.5rem); margin: 10px 0; }
-    #countdown { font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight: bold; margin: 25px 0; }
-    p { font-size: 1.1rem; }
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      margin: 10px 0;
+    }
+
+    #countdown {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      font-weight: bold;
+      margin: 25px 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
 
     button {
       border: none;
@@ -52,33 +69,125 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      background: #fff;
+      background: white;
       color: #4c168b;
       transition: transform 0.2s;
     }
 
-    button:hover { transform: scale(1.06); }
+    button:hover {
+      transform: scale(1.06);
+    }
 
-    #message { min-height: 30px; font-weight: bold; }
-    .emoji { position: fixed; top: -40px; animation: fall 3s linear forwards; pointer-events: none; }
+    input {
+      width: 100%;
+      max-width: 320px;
+      padding: 14px;
+      border: 2px solid white;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    #message {
+      min-height: 30px;
+      font-weight: bold;
+    }
+
+    .emoji {
+      position: fixed;
+      top: -40px;
+      animation: fall 3s linear forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
 
     @keyframes fall {
-      to { transform: translateY(110vh) rotate(720deg); }
+      to {
+        transform: translateY(110vh) rotate(720deg);
+      }
+    }
+
+    #lockScreen {
+      max-width: 450px;
+    }
+
+    #error {
+      min-height: 24px;
+      color: #ffe0e0;
+      font-weight: bold;
+    }
+
+    [hidden] {
+      display: none !important;
     }
   </style>
 </head>
+
 <body>
-  <main class="card">
-    <div style="font-size: 3rem">🎂 🎈 🎁</div>
+
+  <!-- PASSWORD SCREEN -->
+  <main class="card" id="lockScreen">
+    <div style="font-size: 4rem;">🔐</div>
+    <h1>Password please</h1>
+    <p>Enter the secret password to unlock the birthday surprise!</p>
+
+    <form id="passwordForm">
+      <input
+        id="passwordInput"
+        type="password"
+        placeholder="Enter password"
+        aria-label="Password"
+        autocomplete="off"
+        required
+      >
+      <br>
+      <button type="submit">🔓 UNLOCK</button>
+    </form>
+
+    <p id="error" role="status"></p>
+  </main>
+
+  <!-- BIRTHDAY WEBSITE -->
+  <main class="card" id="birthdaySite" hidden>
+    <div style="font-size: 3rem;">🎂 🎈 🎁</div>
     <h1>Birthday Countdown!</h1>
     <p>THE BIG DAY IS NOVEMBER 7! 🔥</p>
+
     <div id="countdown">Loading...</div>
-    <button onclick="celebrate()">🎉 CELEBRATE!</button>
-    <button onclick="showMessage()">💌 Secret Message</button>
-    <p id="message"></p>
+
+    <button type="button" onclick="celebrate()">
+      🎉 CELEBRATE!
+    </button>
+
+    <button type="button" onclick="showMessage()">
+      💌 Secret Message
+    </button>
+
+    <p id="message" aria-live="polite"></p>
   </main>
 
   <script>
+    const lockScreen = document.getElementById("lockScreen");
+    const birthdaySite = document.getElementById("birthdaySite");
+    const passwordForm = document.getElementById("passwordForm");
+    const passwordInput = document.getElementById("passwordInput");
+    const error = document.getElementById("error");
+
+    passwordForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (passwordInput.value === "Uzair") {
+        lockScreen.hidden = true;
+        birthdaySite.hidden = false;
+        updateCountdown();
+      } else {
+        error.textContent = "Wrong password! Try again. 🔒";
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    });
+
     function updateCountdown() {
       const now = new Date();
       let birthday = new Date(now.getFullYear(), 10, 7);
@@ -97,28 +206,35 @@
         `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
+    setInterval(updateCountdown, 1000);
+
     function celebrate() {
       const emojis = ["🎉", "🎂", "🎈", "✨", "🎁", "⭐"];
+
       for (let i = 0; i < 45; i++) {
         const item = document.createElement("div");
         item.className = "emoji";
-        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        item.textContent =
+          emojis[Math.floor(Math.random() * emojis.length)];
+
         item.style.left = Math.random() * 100 + "vw";
         item.style.fontSize = (20 + Math.random() * 25) + "px";
         item.style.animationDuration = (2 + Math.random() * 3) + "s";
+
         document.body.appendChild(item);
         setTimeout(() => item.remove(), 5000);
       }
-      document.getElementById("message").textContent = "LET'S GOOOOO! 🎉🔥";
+
+      document.getElementById("message").textContent =
+        "LET'S GOOOOO! 🎉🔥";
     }
 
     function showMessage() {
       document.getElementById("message").textContent =
         "You deserve an AMAZING birthday! Keep shining! 🌟🎂";
     }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
   </script>
+
 </body>
 </html>
+
