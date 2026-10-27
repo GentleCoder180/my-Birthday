@@ -8,62 +8,61 @@
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;color:#fff;
-  font-family:Arial,sans-serif;text-align:center;
-  background:radial-gradient(circle at top,#24205c,#080817 65%);
+  margin:0;min-height:100vh;color:white;text-align:center;
+  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#292060,#080817 70%);
 }
-header{padding:28px 12px 10px}
-h1{color:#79f7ff;text-shadow:0 0 18px #00cfff}
+header{padding:25px 12px}
+h1{color:#76f5ff;text-shadow:0 0 18px #00d9ff}
 h2{color:#ff9df2}
-p{line-height:1.6}
 .card{
-  width:min(92%,620px);margin:20px auto;padding:25px;
-  background:#17172be8;border:1px solid #5555a8;
+  width:min(92%,600px);margin:15px auto;padding:24px;
+  background:#17172bed;border:1px solid #5555a8;
   border-radius:20px;box-shadow:0 0 25px #5d35aa55;
 }
+.screen{display:none}
+.screen.active{display:block}
 input,button,textarea{
-  width:100%;padding:13px;margin:8px 0;border-radius:10px;
-  font-size:16px;
+  display:block;width:100%;padding:13px;margin:10px 0;
+  border-radius:10px;font-size:16px;
 }
-input,textarea{background:#0b0b1c;color:white;border:1px solid #6262a4}
+input,textarea{
+  background:#0b0b1c;color:white;border:1px solid #6262a4;
+}
 button{
   background:linear-gradient(90deg,#00d9ff,#b45cff);
   color:#080817;border:0;font-weight:bold;cursor:pointer;
 }
-button:hover{filter:brightness(1.15);transform:scale(1.01)}
-.screen{display:none}
-.screen.active{display:block}
-.small{font-size:13px;color:#c8c8e8}
+button:hover{filter:brightness(1.15)}
+p{line-height:1.6}
+.small{font-size:12px;color:#aaa}
 #gameBoard{
   display:grid;grid-template-columns:repeat(7,1fr);
   gap:5px;max-width:350px;margin:20px auto;
 }
 .tile{
-  aspect-ratio:1;background:#29294a;border-radius:7px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:23px;cursor:pointer;
+  aspect-ratio:1;padding:0;margin:0;background:#29294a;
+  color:white;border-radius:7px;font-size:22px;
 }
-.tile:hover{background:#44447a}
-a{color:#79f7ff}
-footer{padding:25px;color:#aaa}
+footer{padding:20px;color:#999}
 </style>
 </head>
 <body>
+
 <header>
   <h1>🌌 UZAIR UNIVERSE 🌌</h1>
-  <p>A special little universe made for a special birthday!</p>
+  <p>Your birthday adventure starts here!</p>
 </header>
 
 <main>
   <section id="login" class="screen active card">
-    <h2>🔐 Enter Your Code</h2>
-    <p>Choose your adventure!</p>
+    <h2>🔐 ENTER YOUR CODE</h2>
+    <p>Enter your code to unlock your adventure.</p>
     <form id="loginForm">
-      <input id="password" placeholder="Enter your code..." autocomplete="off" required>
-      <button type="submit">🚀 ENTER UNIVERSE</button>
+      <input id="password" placeholder="Enter code..." required autocomplete="off">
+      <button type="submit">🚀 ENTER</button>
     </form>
-    <p id="loginMessage"></p>
-    <p class="small">Birthday • Games • Admin</p>
+    <p id="loginMessage" role="status"></p>
   </section>
 
   <section id="birthday" class="screen card">
@@ -73,51 +72,50 @@ footer{padding:25px;color:#aaa}
     <h2 id="countdown">Loading countdown...</h2>
     <button id="celebrate">🎉 CELEBRATE!</button>
     <p id="celebration"></p>
-    <button id="secretButton">💌 Secret Message</button>
+    <button id="secretButton">💌 SECRET MESSAGE</button>
     <p id="secretMessage" hidden>
-      You are the main character of your own universe. Keep learning,
-      keep creating, and make your next year amazing! 🚀
+      Keep learning, keep creating, and make your next year amazing! 🚀
     </p>
-    <button onclick="showScreen('login')">⬅ Back to entrance</button>
+    <button onclick="showScreen('login')">⬅ BACK</button>
   </section>
 
   <section id="game" class="screen card">
-    <h2>🎮 Star Collector</h2>
-    <p>Click the stars ⭐ to collect them. Try to get 10!</p>
-    <p>Stars collected: <strong id="score">0</strong> / 10</p>
+    <h2>🎮 STAR COLLECTOR</h2>
+    <p>Find all 10 hidden stars!</p>
+    <p>Stars: <strong id="score">0</strong> / 10</p>
     <div id="gameBoard"></div>
     <p id="gameMessage">Find the stars!</p>
-    <button id="restartGame">🔄 Restart Game</button>
-    <button onclick="showScreen('login')">⬅ Back to entrance</button>
+    <button id="restartGame">🔄 PLAY AGAIN</button>
+    <button onclick="showScreen('login')">⬅ BACK</button>
   </section>
 
   <section id="admin" class="screen card">
-    <h2>🛠️ Upgrade Request Center</h2>
-    <p>Describe what you want to improve on your website.</p>
-    <textarea id="upgradeRequest" rows="5"
-      placeholder="Example: Add a new level, animations, and more games..."></textarea>
-    <button id="makePrompt">✨ Create Upgrade Prompt</button>
+    <h2>🛠️ UPGRADE CENTER</h2>
+    <p>Describe the feature you want to add.</p>
+    <textarea id="upgradeRequest" rows="4"
+      placeholder="Example: Add a racing game and more animations..."></textarea>
+    <button id="makePrompt">✨ CREATE UPGRADE PROMPT</button>
     <textarea id="generatedPrompt" rows="7" readonly
-      placeholder="Your upgrade prompt will appear here..."></textarea>
-    <button id="copyPrompt">📋 Copy Prompt</button>
+      placeholder="Your prompt will appear here..."></textarea>
+    <button id="copyPrompt">📋 COPY PROMPT</button>
     <p id="adminMessage"></p>
-    <p class="small">
-      This makes a prompt you can send to ChatGPT. It does not edit GitHub automatically.
-    </p>
-    <button onclick="showScreen('login')">⬅ Back to entrance</button>
+    <p class="small">This creates a prompt for ChatGPT. It does not automatically edit GitHub.</p>
+    <button onclick="showScreen('login')">⬅ BACK</button>
   </section>
 </main>
 
-<footer>Made with 💙 and a little bit of code.</footer>
+<footer>Made with 💙</footer>
 
 <script>
 function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(screen=>{
+    screen.classList.remove("active");
+  });
   document.getElementById(id).classList.add("active");
 }
 
-document.getElementById("loginForm").addEventListener("submit",function(e){
-  e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit",function(event){
+  event.preventDefault();
 
   const code=document.getElementById("password").value.trim();
   const destinations={
@@ -126,9 +124,10 @@ document.getElementById("loginForm").addEventListener("submit",function(e){
     "Admin":"admin"
   };
 
-  if(destinations[code]){
+  if(Object.prototype.hasOwnProperty.call(destinations,code)){
     showScreen(destinations[code]);
     document.getElementById("loginMessage").textContent="";
+    document.getElementById("password").value="";
     if(code==="Games") startGame();
   }else{
     document.getElementById("loginMessage").textContent="Wrong code! Try again 🔒";
@@ -137,41 +136,39 @@ document.getElementById("loginForm").addEventListener("submit",function(e){
 
 function updateCountdown(){
   const now=new Date();
-  let year=now.getFullYear();
-  let birthday=new Date(year,10,7,0,0,0); // November 7
-  if(now>birthday) birthday=new Date(year+1,10,7,0,0,0);
+  let birthday=new Date(now.getFullYear(),10,7);
+  if(now>=birthday) birthday=new Date(now.getFullYear()+1,10,7);
 
   const diff=birthday-now;
   const days=Math.floor(diff/86400000);
-  const hours=Math.floor((diff%86400000)/3600000);
-  const minutes=Math.floor((diff%3600000)/60000);
-  const seconds=Math.floor((diff%60000)/1000);
+  const hours=Math.floor(diff%86400000/3600000);
+  const minutes=Math.floor(diff%3600000/60000);
+  const seconds=Math.floor(diff%60000/1000);
 
   document.getElementById("countdown").textContent=
-    days+" days "+hours+" hours "+minutes+" minutes "+seconds+" seconds until November 7! 🎂";
+    days+" days "+hours+" hours "+minutes+" minutes "+seconds+
+    " seconds until November 7! 🎂";
 }
 updateCountdown();
 setInterval(updateCountdown,1000);
 
 document.getElementById("celebrate").addEventListener("click",()=>{
-  document.getElementById("celebration").textContent=
-    "🎉🎉 HAPPY BIRTHDAY! 🎉🎉";
-  for(let i=0;i<18;i++){
-    const emoji=document.createElement("span");
-    emoji.textContent=["🎉","✨","🎈","⭐"][i%4];
-    emoji.style.position="fixed";
-    emoji.style.left=Math.random()*95+"vw";
-    emoji.style.top=Math.random()*85+"vh";
-    emoji.style.fontSize="28px";
-    emoji.style.pointerEvents="none";
-    document.body.appendChild(emoji);
-    setTimeout(()=>emoji.remove(),1800);
+  document.getElementById("celebration").textContent="🎉🎉 LET'S CELEBRATE! 🎉🎉";
+  for(let i=0;i<24;i++){
+    const spark=document.createElement("span");
+    spark.textContent=["🎉","✨","🎈","⭐"][i%4];
+    spark.style.cssText=
+      "position:fixed;left:"+Math.random()*95+
+      "vw;top:"+Math.random()*90+
+      "vh;font-size:28px;pointer-events:none;z-index:10";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),1800);
   }
 });
 
 document.getElementById("secretButton").addEventListener("click",()=>{
-  const msg=document.getElementById("secretMessage");
-  msg.hidden=!msg.hidden;
+  const message=document.getElementById("secretMessage");
+  message.hidden=!message.hidden;
 });
 
 let score=0;
@@ -182,82 +179,74 @@ function startGame(){
   const board=document.getElementById("gameBoard");
   board.innerHTML="";
 
-  let starPositions=new Set();
-  while(starPositions.size<10){
-    starPositions.add(Math.floor(Math.random()*35));
-  }
+  const stars=new Set();
+  while(stars.size<10) stars.add(Math.floor(Math.random()*35));
 
   for(let i=0;i<35;i++){
     const tile=document.createElement("button");
     tile.className="tile";
     tile.type="button";
     tile.textContent="❔";
-    tile.setAttribute("aria-label","Hidden tile");
+    tile.dataset.done="false";
 
     tile.addEventListener("click",()=>{
-      if(tile.dataset.done)return;
+      if(tile.dataset.done==="true") return;
       tile.dataset.done="true";
 
-      if(starPositions.has(i)){
+      if(stars.has(i)){
         tile.textContent="⭐";
         score++;
         document.getElementById("score").textContent=score;
         if(score===10){
           document.getElementById("gameMessage").textContent=
-            "🏆 YOU WIN! You collected all 10 stars!";
+            "🏆 YOU FOUND EVERY STAR! YOU WIN!";
         }
       }else{
         tile.textContent="🌌";
       }
     });
-
     board.appendChild(tile);
   }
 }
-
 document.getElementById("restartGame").addEventListener("click",startGame);
 
 document.getElementById("makePrompt").addEventListener("click",()=>{
   const request=document.getElementById("upgradeRequest").value.trim();
+  const output=document.getElementById("generatedPrompt");
+  const status=document.getElementById("adminMessage");
+
   if(!request){
-    document.getElementById("adminMessage").textContent=
-      "Write an upgrade idea first!";
+    status.textContent="Write an upgrade idea first!";
     return;
   }
 
-  document.getElementById("generatedPrompt").value=
-`Help me upgrade my birthday website hosted on GitHub Pages.
+  output.value=
+`Upgrade my birthday website:
+https://gentlecoder180.github.io/my-Birthday/
 
-Website: https://gentlecoder180.github.io/my-Birthday/
+My request: ${request}
 
-My requested upgrade:
-${request}
-
-Please provide complete, working code for index.html.
-Keep the birthday countdown to November 7, the password choices
-Uzair, Games, and Admin, and all existing working features unless
-my request specifically changes them. Explain how to replace the
-code in GitHub and publish the update.`;
-  document.getElementById("adminMessage").textContent=
-    "Upgrade prompt created! Copy it and send it to ChatGPT.";
+Give me complete working index.html code. Keep the Uzair birthday page,
+Games mini-game, Admin upgrade center, and November 7 countdown.
+Explain how to publish the changes on GitHub Pages.`;
+  status.textContent="Upgrade prompt created! Copy it into ChatGPT.";
 });
 
 document.getElementById("copyPrompt").addEventListener("click",async()=>{
-  const prompt=document.getElementById("generatedPrompt").value;
-  if(!prompt){
-    document.getElementById("adminMessage").textContent=
-      "Create an upgrade prompt first!";
+  const output=document.getElementById("generatedPrompt");
+  const status=document.getElementById("adminMessage");
+
+  if(!output.value){
+    status.textContent="Create a prompt first!";
     return;
   }
 
   try{
-    await navigator.clipboard.writeText(prompt);
-    document.getElementById("adminMessage").textContent="Copied! ✅";
+    await navigator.clipboard.writeText(output.value);
+    status.textContent="Copied! ✅";
   }catch(error){
-    document.getElementById("generatedPrompt").select();
-    document.execCommand("copy");
-    document.getElementById("adminMessage").textContent=
-      "Select and copy the prompt if it wasn't copied automatically.";
+    output.select();
+    status.textContent="Press Ctrl+C to copy the selected prompt.";
   }
 });
 </script>
