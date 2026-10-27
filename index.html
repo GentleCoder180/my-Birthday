@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Countdown 🎂</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: linear-gradient(-45deg, #11002e, #003b73, #7800a8, #001b46);
+      background-size: 400% 400%;
+      animation: colors 10s ease infinite;
+      padding: 20px;
+    }
+
+    @keyframes colors {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      max-width: 550px;
+      width: 100%;
+      padding: 35px 20px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 0 40px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 { font-size: clamp(2rem, 8vw, 3.5rem); margin: 10px 0; }
+    #countdown { font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight: bold; margin: 25px 0; }
+    p { font-size: 1.1rem; }
+
+    button {
+      border: none;
+      border-radius: 30px;
+      padding: 15px 25px;
+      margin: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: #fff;
+      color: #4c168b;
+      transition: transform 0.2s;
+    }
+
+    button:hover { transform: scale(1.06); }
+
+    #message { min-height: 30px; font-weight: bold; }
+    .emoji { position: fixed; top: -40px; animation: fall 3s linear forwards; pointer-events: none; }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(720deg); }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div style="font-size: 3rem">🎂 🎈 🎁</div>
+    <h1>Birthday Countdown!</h1>
+    <p>THE BIG DAY IS NOVEMBER 7! 🔥</p>
+    <div id="countdown">Loading...</div>
+    <button onclick="celebrate()">🎉 CELEBRATE!</button>
+    <button onclick="showMessage()">💌 Secret Message</button>
+    <p id="message"></p>
+  </main>
+
+  <script>
+    function updateCountdown() {
+      const now = new Date();
+      let birthday = new Date(now.getFullYear(), 10, 7);
+
+      if (now >= birthday) {
+        birthday = new Date(now.getFullYear() + 1, 10, 7);
+      }
+
+      const difference = birthday - now;
+      const days = Math.floor(difference / 86400000);
+      const hours = Math.floor((difference % 86400000) / 3600000);
+      const minutes = Math.floor((difference % 3600000) / 60000);
+      const seconds = Math.floor((difference % 60000) / 1000);
+
+      document.getElementById("countdown").textContent =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function celebrate() {
+      const emojis = ["🎉", "🎂", "🎈", "✨", "🎁", "⭐"];
+      for (let i = 0; i < 45; i++) {
+        const item = document.createElement("div");
+        item.className = "emoji";
+        item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.fontSize = (20 + Math.random() * 25) + "px";
+        item.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 5000);
+      }
+      document.getElementById("message").textContent = "LET'S GOOOOO! 🎉🔥";
+    }
+
+    function showMessage() {
+      document.getElementById("message").textContent =
+        "You deserve an AMAZING birthday! Keep shining! 🌟🎂";
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
