@@ -1,0 +1,42 @@
+
+name: Check Birthday Website
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get website files
+        uses: actions/checkout@v4
+
+      - name: Check index.html exists
+        run: test -f index.html
+
+      - name: Check basic HTML structure
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          class Checker(HTMLParser):
+              pass
+
+          page = Path("index.html").read_text(encoding="utf-8")
+          checker = Checker()
+          checker.feed(page)
+          checker.close()
+
+          if "<html" not in page.lower():
+              raise SystemExit("Missing HTML element")
+          if "</html>" not in page.lower():
+              raise SystemExit("Missing closing HTML element")
+
+          print("Basic HTML checks passed!")
+          PY
